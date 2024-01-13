@@ -1,7 +1,7 @@
 export type IMenu = {
   details: any[];
   discount: number;
-  id: number;
+  id: string;
   ingredients: [];
   introduction: string;
   name: string;
