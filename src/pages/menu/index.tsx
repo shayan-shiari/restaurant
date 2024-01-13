@@ -12,7 +12,7 @@ const Menu = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
         Menu
       </h2>
       <div className="flex flex-wrap justify-between">
-        {data.map(item => <Card {...item}/>)}
+        {data.map(item => <Card {...item} />)}
       </div>
     </div>
   );
@@ -24,7 +24,7 @@ export const getStaticProps: GetStaticProps<{ data: IMenu[] }> = async (
   context
 ) => {
   const res = await axios.get("http://localhost:4000/data");
-  const data: IMenu[] = await res.data;
-
+  const data = await res.data;
+    
   return { props: { data }, revalidate: 10 };
 };
