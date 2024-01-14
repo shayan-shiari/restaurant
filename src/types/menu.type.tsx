@@ -1,5 +1,14 @@
+interface IDetails {
+  Cuisine: string;
+  "Recipe Type": string;
+  Difficulty: string;
+  "Preparation Time": string;
+  "Cooking Time": string;
+  Serves: string;
+}
+
 export type IMenu = {
-  details: any[];
+  details: IDetails[];
   discount: number;
   id: string;
   ingredients: [];
@@ -7,4 +16,4 @@ export type IMenu = {
   name: string;
   price: number;
   recipe: [];
-}
+};
