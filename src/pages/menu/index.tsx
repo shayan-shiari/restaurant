@@ -12,7 +12,7 @@ const Menu = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
         Menu
       </h2>
       <div className="flex flex-wrap justify-between">
-        {data.map(item => <Card {...item} />)}
+        {data.map(item => <Card key={item.id} {...item} />)}
       </div>
     </div>
   );

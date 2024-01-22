@@ -1,20 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { IMenu } from "@/types/menu.type";
+import { ICategory } from "@/types/category.type";
+import Card from "@/components/layout/pageComponents/Card";
+import Image from "next/image";
 
 const Categories = ({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const [query, setQeury] = useState({
+  const [query, setQuery] = useState<ICategory>({
     difficulty: "",
     time: "",
   });
 
+  useEffect(() => {
+    const { difficulty, time } = router.query;
+
+    if (query.difficulty !== difficulty || query.time !== time) {
+      setQuery(router.query);
+    }
+  }, []);
+
   const changeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setQeury({
+    setQuery({
       ...query,
       [e.target.name]: e.target.value,
     });
@@ -22,7 +33,7 @@ const Categories = ({
 
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push({ pathname: "/categories", query });
+    router.push({ pathname: "/categories", query: { ...query } });
   };
 
   return (
@@ -57,6 +68,19 @@ const Categories = ({
             Search
           </button>
         </form>
+        <div className="flex flex-wrap justify-between mt-20">
+          {!data.length ? (
+            <Image
+              src="/images/search.png"
+              className="w-80 m-auto"
+              width={1000}
+              height={1000}
+              alt="category"
+            />
+          ) : (
+            data.map((food) => <Card key={food.id} {...food} />)
+          )}
+        </div>
       </div>
     </div>
   );
